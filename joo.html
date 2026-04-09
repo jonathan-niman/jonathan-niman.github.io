@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============================================================
+       SEO META TAGS — Ganti bagian bertanda [NAMA LO] dll
+       ============================================================ -->
+  <title>[NAMA LO] — Photography Portfolio</title>
+  <meta name="description" content="Portfolio fotografer [NAMA LO]. Karya foto People, Food, Macro, Traveling dan masih banyak lagi." />
+  <meta name="keywords" content="[NAMA LO], fotografer, photography portfolio, foto people, foto food, macro photography, travel photography, Indonesia" />
+  <meta name="author" content="[NAMA LO]" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph (tampil saat link dishare di WA/sosmed) -->
+  <meta property="og:title" content="[NAMA LO] — Photography Portfolio" />
+  <meta property="og:description" content="Karya foto People, Food, Macro, Traveling oleh [NAMA LO]." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://[DOMAIN-LO].com" />
+  <meta property="og:image" content="https://[DOMAIN-LO].com/preview.jpg" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       CSS VARIABLES — Edit di sini untuk ubah warna/font global
+       ============================================================ */
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f5f0;
+      --grey-dim: #2a2a2a;
+      --grey-mid: #888;
+      --grey-light: #ccc;
+      --accent: #f5f5f0;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'Jost', sans-serif;
+      --transition: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      overflow-x: hidden;
+      cursor: none; /* Custom cursor aktif */
+    }
+
+    /* ============================================================
+       CUSTOM CURSOR
+       ============================================================ */
+    #cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--white);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: difference;
+    }
+
+    #cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1px solid rgba(245,245,240,0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: all 0.12s ease;
+      mix-blend-mode: difference;
+    }
+
+    body:has(a:hover) #cursor,
+    body:has(button:hover) #cursor { width: 20px; height: 20px; }
+    body:has(a:hover) #cursor-ring,
+    body:has(button:hover) #cursor-ring { width: 56px; height: 56px; opacity: 0; }
+
+    /* ============================================================
+       SCROLL REVEAL ANIMATION
+       ============================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s var(--transition), transform 0.9s var(--transition);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ============================================================
+       NOISE TEXTURE OVERLAY (efek film grain)
+       ============================================================ */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9000;
+      opacity: 0.35;
+    }
+
+    /* ============================================================
+       NAVBAR
+       ============================================================ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 200;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--grey-light);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--white);
+      transition: width 0.4s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ============================================================
+       HERO SECTION
+       ============================================================ */
+    #hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-label {
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--grey-mid);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 10vw, 9rem);
+      font-weight: 300;
+      line-height: 0.9;
+      color: var(--white);
+      margin-bottom: 32px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--grey-light);
+    }
+
+    .hero-sub {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 200;
+      letter-spacing: 0.2em;
+      color: var(--grey-mid);
+      max-width: 320px;
+      line-height: 2;
+      text-transform: uppercase;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      right: 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      opacity: 0.5;
+    }
+
+    .hero-scroll span {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--white), transparent);
+      animation: scrollLine 1.8s ease-in-out infinite;
+    }
+
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1); transform-origin: top; }
+      51%  { transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0.2; }
+    }
+
+    /* ============================================================
+       SECTION BASE
+       ============================================================ */
+    section {
+      padding: 120px 48px;
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--grey-mid);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 48px;
+    }
+
+    /* Garis divider */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--grey-dim);
+      margin-bottom: 80px;
+    }
+
+    /* ============================================================
+       ABOUT SECTION
+       ============================================================ */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.4fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    /* --- Foto profil --- */
+    .about-photo-wrap {
+      position: relative;
+    }
+
+    .about-photo-wrap::before {
+      content: '';
+      position: absolute;
+      top: 16px; left: 16px;
+      right: -16px; bottom: -16px;
+      border: 1px solid var(--grey-dim);
+      z-index: 0;
+      transition: all 0.4s;
+    }
+
+    .about-photo-wrap:hover::before {
+      top: 10px; left: 10px;
+      right: -10px; bottom: -10px;
+    }
+
+    .about-photo {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(20%);
+      transition: filter 0.5s;
+      display: block;
+    }
+
+    .about-photo-wrap:hover .about-photo {
+      filter: grayscale(0%);
+    }
+
+    .about-photo-badge {
+      position: absolute;
+      bottom: -14px;
+      right: -14px;
+      z-index: 2;
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 10px 16px;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+      line-height: 2;
+      color: var(--grey-light);
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 900px) {
+      #about {
+        grid-template-columns: 1fr 1fr;
+      }
+      .about-text { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 600px) {
+      #about { grid-template-columns: 1fr; }
+      .about-photo-wrap { max-width: 260px; }
+    }
+
+    /* ============================================================
+       GALERI — Tab Filter
+       ============================================================ */
+    #gallery { padding-bottom: 60px; }
+
+    .gallery-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 48px;
+    }
+
+    .filter-btn {
+      background: none;
+      border: 1px solid var(--grey-dim);
+      color: var(--grey-mid);
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      cursor: none;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--white);
+      border-color: var(--white);
+      color: var(--black);
+    }
+
+    /* ============================================================
+       MASONRY GRID — Edit foto di bagian HTML bawah
+       ============================================================ */
+    .gallery-grid {
+      columns: 3;
+      column-gap: 12px;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: none;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      filter: grayscale(30%);
+      transition: filter 0.5s, transform 0.6s var(--transition);
+    }
+
+    .gallery-item:hover img {
+      filter: grayscale(0%);
+      transform: scale(1.04);
+    }
+
+    .gallery-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+    }
+
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+
+    .gallery-item-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* Hidden saat filter */
+    .gallery-item.hidden {
+      display: none;
+    }
+
+    /* ============================================================
+       LIGHTBOX
+       ============================================================ */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 500;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s;
+    }
+
+    #lightbox.open { display: flex; }
+
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+
+    #lightbox-close {
+      position: absolute;
+      top: 24px; right: 32px;
+      font-size: 2rem;
+      color: var(--white);
+      cursor: none;
+      opacity: 0.6;
+      transition: opacity 0.3s;
+      background: none;
+      border: none;
+    }
+    #lightbox-close:hover { opacity: 1; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* ============================================================
+       CONTACT SECTION
+       ============================================================ */
+    #contact {
+      background: var(--grey-dim);
+      text-align: center;
+    }
+
+    #contact .section-title { margin-bottom: 16px; }
+
+    .contact-tagline {
+      font-size: 0.85rem;
+      color: var(--grey-mid);
+      letter-spacing: 0.15em;
+      margin-bottom: 60px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 30px;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      transition: all 0.35s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-link::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--white);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
+    }
+
+    .contact-link:hover::before { transform: scaleX(1); }
+    .contact-link:hover { color: var(--black); }
+    .contact-link span { position: relative; z-index: 1; }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer {
+      text-align: center;
+      padding: 32px 48px;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--grey-mid);
+      text-transform: uppercase;
+      border-top: 1px solid var(--grey-dim);
+    }
+
+    /* ============================================================
+       PAGE TRANSITION (smooth masuk)
+       ============================================================ */
+    .page-transition {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 8000;
+      animation: pageReveal 1s ease forwards;
+    }
+
+    @keyframes pageReveal {
+      0%   { transform: scaleY(1); transform-origin: top; }
+      100% { transform: scaleY(0); transform-origin: top; }
+    }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { gap: 20px; }
+      section { padding: 80px 24px; }
+      #hero { padding: 0 24px; }
+      #about { grid-template-columns: 1fr; gap: 40px; }
+      .gallery-grid { columns: 2; }
+      .hero-scroll { right: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-grid { columns: 1; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Page transition overlay -->
+  <div class="page-transition"></div>
+
+  <!-- Custom cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- ============================================================
+       NAVBAR
+       Ganti [NAMA LO] dengan nama/inisial lo
+       ============================================================ -->
+  <nav>
+    <a href="#hero" class="nav-logo">[NAMA LO]</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section id="hero">
+    <p class="hero-label reveal">Photography Portfolio</p>
+    <h1 class="hero-title reveal reveal-delay-1">
+      Through<br/><em>the lens</em>
+    </h1>
+    <p class="hero-sub reveal reveal-delay-2">
+      People · Food · Macro<br/>Traveling · and more
+    </p>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT
+       Ganti teks di sini dengan bio lo sendiri
+       ============================================================ -->
+  <section id="about">
+    <div class="about-left reveal">
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">Capturing<br/><em>moments<br/>that matter</em></h2>
+    </div>
+
+    <!-- ============================================================
+         📷 FOTO PROFIL — Ganti src di bawah dengan foto lo
+         ────────────────────────────────────────────────────────────
+         Gunakan foto portrait/vertikal biar proporsional
+
+         Cara ganti:
+         • Foto lokal   → src="foto/profil-lo.jpg"
+                          (taruh file foto di folder yang sama dengan index.html)
+         • Google Drive → src="https://drive.google.com/uc?export=view&id=ID_FOTO"
+         • Link online  → src="https://link-foto-lo.com/foto.jpg"
+
+         Ganti juga teks badge "Photographer" jika mau label lain
+         ============================================================ -->
+    <div class="about-photo-wrap reveal reveal-delay-1">
+      <img
+        class="about-photo"
+        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80"
+        alt="Foto profil [NAMA LO] — ganti src ini dengan foto lo"
+      />
+      <!-- Badge kecil di pojok kanan bawah foto — ganti teksnya jika perlu -->
+      <span class="about-photo-badge">Photographer</span>
+    </div>
+
+    <div class="about-text">
+      <p class="reveal reveal-delay-1">
+        <!-- GANTI INI dengan bio lo -->
+        Halo, nama gue [NAMA LO]. Gue adalah seorang fotografer yang passionate dalam merekam cerita melalui lensa kamera.
+      </p>
+      <p class="reveal reveal-delay-2">
+        <!-- GANTI INI dengan cerita singkat lo -->
+        Dari jalanan kota hingga detail terkecil alam, gue percaya setiap momen layak diabadikan dengan cara yang indah dan jujur.
+      </p>
+      <p class="reveal reveal-delay-3">
+        <!-- GANTI INI juga -->
+        Fokus gue ada di people photography, food, macro, dan traveling — tapi hati gue terbuka untuk semua cerita.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+  📸 GALLERY — PANDUAN LENGKAP NAMBAHIN FOTO
+  ============================================================
+
+  CARA NAMBAHIN FOTO (3 langkah):
+  ─────────────────────────────────
+  1. Copy salah satu blok di bawah (dari <!-- SLOT --> sampai </div>)
+  2. Tempel di bawah blok terakhir sebelum </div>  ← end gallery-grid
+  3. Ganti 3 bagian ini:
+       src="URL_FOTO_LO"          ← link foto lo (Google Drive, Imgur, dll)
+       data-category="KATEGORI"   ← people / food / macro / traveling
+       >Judul Foto</span>         ← nama foto yang muncul saat hover
+
+  FORMAT URL FOTO:
+  ─────────────────
+  • Foto online  → src="https://link-foto-lo.com/foto.jpg"
+  • Foto lokal   → src="foto/nama-file.jpg"  (taruh foto di folder 'foto/')
+  • Google Drive → klik kanan foto → Share → Anyone with link
+                   lalu ubah URL dari:
+                   https://drive.google.com/file/d/ID/view
+                   jadi:
+                   https://drive.google.com/uc?export=view&id=ID
+
+  KATEGORI YANG TERSEDIA:
+  ─────────────────────────
+  people | food | macro | traveling
+  (tambah kategori baru? lihat komentar di filter tombol di bawah)
+
+  CONTOH SLOT KOSONG SIAP PAKAI — tinggal copy & isi:
+
+  <!-- SLOT KOSONG — COPY INI untuk tambah foto baru
+  <div class="gallery-item reveal" data-category="KATEGORI">
+    <img src="URL_FOTO_LO" alt="Deskripsi singkat foto" loading="lazy" />
+    <div class="gallery-item-overlay">
+      <span class="gallery-item-title">Judul Foto</span>
+    </div>
+  </div>
+  END SLOT KOSONG -->
+
+  ============================================================ -->
+  <section id="gallery">
+    <div class="divider"></div>
+    <p class="section-label reveal">Portfolio</p>
+    <h2 class="section-title reveal reveal-delay-1">Selected<br/><em>Works</em></h2>
+
+    <!-- ── FILTER TOMBOL ──────────────────────────────────────
+         CARA TAMBAH KATEGORI BARU:
+         1. Copy baris filter-btn di bawah
+         2. Ganti data-filter="xxx" dan teksnya
+         3. Pakai data-category="xxx" yang sama di item galeri
+    ─────────────────────────────────────────────────────────── -->
+    <div class="gallery-filters reveal reveal-delay-2">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="people">People</button>
+      <button class="filter-btn" data-filter="food">Food</button>
+      <button class="filter-btn" data-filter="macro">Macro</button>
+      <button class="filter-btn" data-filter="traveling">Traveling</button>
+      <!-- Contoh tambah kategori: <button class="filter-btn" data-filter="street">Street</button> -->
+    </div>
+
+    <div class="gallery-grid">
+
+      <!-- ══════════════════════════════════════════
+           PEOPLE — Ganti src dengan foto lo sendiri
+           ══════════════════════════════════════════ -->
+
+      <!-- SLOT PEOPLE #1 -->
+      <div class="gallery-item reveal" data-category="people">
+        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=80"
+             alt="Portrait 1"
+             loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">Unnamed Portrait</span>
+          <!-- Ganti teks di atas dengan judul foto lo -->
+        </div>
+      </div>
+
+      <!-- SLOT PEOPLE #2 -->
+      <div class="gallery-item reveal reveal-delay-1" data-category="people">
+        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=80"
+             alt="Portrait 2"
+             loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">The Gaze</span>
+        </div>
+      </div>
+
+      <!-- SLOT PEOPLE #3 — kosong, siap diisi -->
+      <div class="gallery-item reveal reveal-delay-2" data-category="people">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=80"
+             alt="Portrait 3 — ganti dengan foto lo"
+             loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">Portrait III</span>
+        </div>
+      </div>
+
+
+      <!-- ══════════════════════════════════════════
+           FOOD — Ganti src dengan foto lo sendiri
+           ══════════════════════════════════════════ -->
+
+      <!-- SLOT FOOD #1 -->
+      <div class="gallery-item reveal" data-category="food">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80"
+             alt="Food 1"
+             loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">Morning Plate</span>
+        </div>
+      </div>
+
+      <!-- SLOT FOOD #2 -->
+      <div class="gallery-item reveal reveal-delay-1" data-category="food">
+        <img src="https://images.unsplash.com/photo-1555126634-323283e090fa?w=800&q=80"
+             alt="Food 2"
+             loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">Still Life</span>
+        </div>
+      </div>
+
+      <!-- SLOT FOOD #3 — kosong, siap diisi -->
+      <div class="gallery-item reveal reveal-delay-2" data-category="food">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80"
+             alt="Food 3 — ganti dengan foto lo"
+             loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">Comfort Food</span>
+        </div>
+      </div>
+
+
+      <!-- ══════════════════════════════════════════
+           MACRO — Ganti src dengan foto lo sendiri
+           ══════════════════════════════════════════ -->
+
+      <!-- SLOT MACRO #1 -->
+      <div class="gallery-item reveal" data-category="macro">
+        <img src="https://images.unsplash.com/photo-1550159930-40066082a4fc?w=800&q=80"
+             alt="Macro 1"
+             loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">Close Detail</span>
+        </div>
+      </div>
+
+      <!-- SLOT MACRO #2 -->
+      <div class="gallery-item reveal reveal-delay-1" data-category="macro">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
+             alt="Macro 2"
+             loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">Tiny World</span>
+        </div>
+      </div>
+
+      <!-- SLOT MACRO #3 — kosong, siap diisi -->
+      <div class="gallery-item reveal reveal-delay-2" data-category="macro">
+        <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=800&q=80"
+             alt="Macro 3 — ganti dengan foto lo"
+             loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">Macro III</span>
+        </div>
+      </div>
+
+
+      <!-- ══════════════════════════════════════════
+           TRAVELING — Ganti src dengan foto lo sendiri
+           ══════════════════════════════════════════ -->
+
+      <!-- SLOT TRAVELING #1 -->
+      <div class="gallery-item reveal" data-category="traveling">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80"
+             alt="Travel 1"
+             loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">Mountain Light</span>
+        </div>
+      </div>
+
+      <!-- SLOT TRAVELING #2 -->
+      <div class="gallery-item reveal reveal-delay-1" data-category="traveling">
+        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80"
+             alt="Travel 2"
+             loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">On the Road</span>
+        </div>
+      </div>
+
+      <!-- SLOT TRAVELING #3 -->
+      <div class="gallery-item reveal reveal-delay-2" data-category="traveling">
+        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80"
+             alt="Travel 3"
+             loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">Endless Horizon</span>
+        </div>
+      </div>
+
+      <!-- SLOT TRAVELING #4 — kosong, siap diisi -->
+      <div class="gallery-item reveal reveal-delay-3" data-category="traveling">
+        <img src="https://images.unsplash.com/photo-1502791451862-7bd8c1df43a7?w=800&q=80"
+             alt="Travel 4 — ganti dengan foto lo"
+             loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">New Destination</span>
+        </div>
+      </div>
+
+
+      <!-- ══════════════════════════════════════════
+           ➕ TAMBAH FOTO BARU DI SINI
+           Copy blok di bawah, isi src & judul
+           ══════════════════════════════════════════
+
+      <div class="gallery-item reveal" data-category="KATEGORI">
+        <img src="URL_FOTO_LO" alt="Deskripsi foto" loading="lazy" />
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-title">Judul Foto</span>
+        </div>
+      </div>
+
+      ══════════════════════════════════════════ -->
+
+    </div><!-- end gallery-grid -->
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox">
+    <button id="lightbox-close" aria-label="Tutup">×</button>
+    <img id="lightbox-img" src="" alt="Preview" />
+  </div>
+
+  <!-- ============================================================
+       CONTACT
+       Ganti link href dengan link sosmed lo
+       ============================================================ -->
+  <section id="contact">
+    <p class="section-label reveal">Get in Touch</p>
+    <h2 class="section-title reveal reveal-delay-1">Let's<br/><em>work together</em></h2>
+    <p class="contact-tagline reveal reveal-delay-2">Available for freelance & collaboration</p>
+
+    <div class="contact-links reveal reveal-delay-3">
+
+      <!-- WhatsApp — ganti 628xxxxxxxxxx dengan nomor lo -->
+      <a class="contact-link" href="https://wa.me/628xxxxxxxxxx" target="_blank" rel="noopener">
+        <span>WhatsApp</span>
+      </a>
+
+      <!-- Instagram — ganti @username -->
+      <a class="contact-link" href="https://instagram.com/[USERNAME-LO]" target="_blank" rel="noopener">
+        <span>Instagram</span>
+      </a>
+
+      <!-- TikTok — opsional, hapus kalau tidak perlu -->
+      <a class="contact-link" href="https://tiktok.com/@[USERNAME-LO]" target="_blank" rel="noopener">
+        <span>TikTok</span>
+      </a>
+
+      <!-- LinkedIn — uncomment saat sudah ada akun
+      <a class="contact-link" href="https://linkedin.com/in/[USERNAME-LO]" target="_blank" rel="noopener">
+        <span>LinkedIn</span>
+      </a>
+      -->
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer>
+    <p>© <span id="year"></span> [NAMA LO] — All Rights Reserved</p>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    /* ---------- Tahun otomatis ---------- */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ---------- Custom Cursor ---------- */
+    const cursor     = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursor-ring');
+
+    document.addEventListener('mousemove', e => {
+      cursor.style.left     = e.clientX + 'px';
+      cursor.style.top      = e.clientY + 'px';
+      cursorRing.style.left = e.clientX + 'px';
+      cursorRing.style.top  = e.clientY + 'px';
+    });
+
+    /* ---------- Scroll Reveal ---------- */
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Tidak di-unobserve agar tetap visible
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // Hero langsung visible
+    document.querySelectorAll('#hero .reveal').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 200);
+    });
+
+    /* ---------- Gallery Filter ---------- */
+    const filterBtns  = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+
+        galleryItems.forEach(item => {
+          if (filter === 'all' || item.dataset.category === filter) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    /* ---------- Lightbox ---------- */
+    const lightbox      = document.getElementById('lightbox');
+    const lightboxImg   = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const src = item.querySelector('img').src;
+        lightboxImg.src = src;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    /* ---------- Smooth nav scroll ---------- */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+
+  <!-- ============================================================
+       JSON-LD SCHEMA (SEO structured data)
+       Ganti [NAMA LO] dan [DOMAIN-LO].com
+       ============================================================ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "[NAMA LO]",
+    "url": "https://[DOMAIN-LO].com",
+    "sameAs": [
+      "https://instagram.com/[USERNAME-LO]",
+      "https://linkedin.com/in/[USERNAME-LO]"
+    ],
+    "jobTitle": "Photographer",
+    "description": "Fotografer spesialis People, Food, Macro, dan Travel Photography."
+  }
+  </script>
+
+</body>
+</html>
